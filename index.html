@@ -23,13 +23,13 @@
 #water::before{content:"";position:absolute;left:-8%;top:-10px;width:116%;height:52px;border-radius:50%;background:radial-gradient(ellipse at 50% 30%,rgba(225,255,255,.34),transparent 63%),repeating-radial-gradient(ellipse at 50% 20%,rgba(255,255,255,.10) 0 3px,transparent 3px 20px);animation:wave 4s ease-in-out infinite}
 #water::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,.05),transparent 22%,rgba(0,0,0,.11));mix-blend-mode:screen;pointer-events:none}
 @keyframes wave{0%,100%{transform:scaleX(1) translateX(-1%)}50%{transform:scaleX(1.03) translateX(1%)}}
-#egg{position:absolute;left:50%;top:56%;width:clamp(125px,11vw,175px);height:clamp(165px,24vh,230px);transform:translate(-50%,-50%);background:url('Golden-Egg/close.png') center/contain no-repeat;cursor:pointer;z-index:6;transition:filter .45s ease,transform .3s ease,top 1.2s ease;filter:drop-shadow(0 0 7px rgba(255,227,120,.72)) drop-shadow(0 18px 18px rgba(0,0,0,.45));pointer-events:auto}
+#egg{position:absolute;left:50%;top:56%;width:clamp(125px,11vw,175px);height:clamp(165px,24vh,230px);transform:translate(-50%,-50%);background:url('close.png') center/contain no-repeat;cursor:pointer;z-index:6;transition:filter .45s ease,transform .3s ease,top 1.2s ease;filter:drop-shadow(0 0 7px rgba(255,227,120,.72)) drop-shadow(0 18px 18px rgba(0,0,0,.45));pointer-events:auto}
 #egg:hover{transform:translate(-50%,-50%) scale(1.045)}
 #egg::after{content:"";position:absolute;inset:10% 8%;border-radius:50%;background:radial-gradient(circle,rgba(255,242,145,.20),transparent 58%);opacity:0;transition:.4s ease;pointer-events:none}
 #egg.submerged{top:61%;filter:drop-shadow(0 0 8px rgba(111,252,255,.9)) drop-shadow(0 0 22px rgba(41,217,255,.7));transform:translate(-50%,-50%);}
 #egg.glowing{filter:drop-shadow(0 0 10px #6ffcff) drop-shadow(0 0 34px #29d9ff) drop-shadow(0 18px 18px rgba(0,0,0,.3))}
 #egg.glowing::after{opacity:1;animation:pulseGlow 1.8s ease-in-out infinite}
-#egg.open{background-image:url('Golden-Egg/open.png');filter:drop-shadow(0 0 12px #6ffcff) drop-shadow(0 0 40px #29d9ff) drop-shadow(0 18px 18px rgba(0,0,0,.35))}
+#egg.open{background-image:url('open.png');filter:drop-shadow(0 0 12px #6ffcff) drop-shadow(0 0 40px #29d9ff) drop-shadow(0 18px 18px rgba(0,0,0,.35))}
 #egg.open::after{opacity:1;animation:pulseGlow 1.8s ease-in-out infinite}
 @keyframes pulseGlow{0%,100%{transform:scale(.92);opacity:.25}50%{transform:scale(1.06);opacity:.65}}
 #egg.screaming{animation:shake .11s linear infinite}
@@ -64,8 +64,8 @@
   <div id="scene"><div id="pool"><div id="pool-rim"></div><div id="water"><div id="bubbles"></div></div><div id="egg" role="button" aria-label="البيضة الذهبية"></div></div></div>
   <div id="magic-flash"></div>
 </div>
-<audio id="scream-audio" src="Golden-Egg/scream.mp3" preload="auto" loop></audio>
-<audio id="mermaid-audio" src="Golden-Egg/mermaid.mp3" preload="auto" loop></audio>
+<audio id="scream-audio" src="scream.mp3" preload="auto" loop></audio>
+<audio id="mermaid-audio" src="mermaid.mp3" preload="auto" loop></audio>
 <script>
 (()=>{
  const state={waterFilled:false,eggOpen:false,eggSubmerged:false,bubbleTimer:null};
