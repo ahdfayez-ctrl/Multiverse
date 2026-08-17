@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>لغز البيضة الذهبية | Hogwarts Puzzle</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--gold:#d4af37;--gold-bright:#ffe7a3;--aqua:#6ffcff;--aqua-2:#29d9ff}
+*{box-sizing:border-box}html,body{width:100%;height:100%;margin:0}body{background:#000;color:#fff;font-family:'Amiri',serif;overflow:hidden;user-select:none}button{font:inherit}
+#bathroom{position:relative;width:100%;height:100%;min-height:100dvh;overflow:hidden;display:flex;justify-content:center;align-items:flex-end;isolation:isolate;background:linear-gradient(180deg,#04131d,#02070c)}
+#bathroom::before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(2,9,14,.16),rgba(2,9,14,.38)),url('Golden-Egg/bathroom.jpg');background-size:cover;background-position:center;filter:saturate(.8) brightness(.56) contrast(1.08);z-index:-4}
+#bathroom::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 42%,transparent 0 18%,rgba(0,0,0,.18) 42%,rgba(0,0,0,.7) 100%),linear-gradient(180deg,rgba(0,0,0,.28),transparent 32%,rgba(0,0,0,.38));z-index:-3;pointer-events:none}
+#ambient{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:-1}.mist{position:absolute;width:40vw;height:18vw;min-width:280px;background:radial-gradient(ellipse,rgba(120,220,255,.12),transparent 68%);filter:blur(22px);animation:drift 11s ease-in-out infinite alternate}.m1{left:-8vw;bottom:28%}.m2{right:-8vw;bottom:36%;animation-delay:-5s}@keyframes drift{from{transform:translate3d(-2%,0,0)}to{transform:translate3d(3%,-7%,0) scale(1.08)}}
+#ui-layer{position:absolute;inset:0;z-index:20;display:flex;flex-direction:column;align-items:center;pointer-events:none}#top-hud{width:min(980px,94vw);margin-top:max(14px,env(safe-area-inset-top));display:flex;flex-direction:column;align-items:center;gap:8px}.title{margin:0;font-size:clamp(1.55rem,3.2vw,2.45rem);color:var(--gold-bright);text-shadow:0 0 12px rgba(255,225,150,.45),0 3px 18px #000}.subtitle{margin:0;color:rgba(255,255,255,.8);font-size:clamp(.95rem,1.7vw,1.15rem);text-shadow:0 2px 7px #000}
+#controls{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;pointer-events:auto}.control-btn{border:1px solid rgba(255,255,255,.18);padding:11px 18px;border-radius:12px;cursor:pointer;color:#fff;background:rgba(6,14,21,.76);box-shadow:0 8px 24px rgba(0,0,0,.4),inset 0 0 16px rgba(255,255,255,.03);backdrop-filter:blur(8px);transition:.25s ease}.control-btn:hover{transform:translateY(-2px)}.control-btn:active{transform:scale(.98)}#mic-btn{border-color:rgba(212,175,55,.6);color:#fff1ba}#manual-btn{border-color:rgba(41,217,255,.45);color:#b7fbff}#mic-btn.listening{background:rgba(145,25,45,.82);box-shadow:0 0 22px rgba(255,71,87,.24)}#status{min-height:28px;margin-top:2px;padding:3px 12px;border-radius:999px;color:#dffcff;font-size:1rem;background:rgba(0,0,0,.25);text-shadow:0 0 8px rgba(111,252,255,.35)}
+#scene{position:absolute;inset:0;pointer-events:none}
+/* لا نغطي الحوض الحقيقي الموجود في bathroom.jpg؛ نضيف فقط طبقة مية بيضاوية فوقه */
+#pool{position:absolute;left:50%;top:49%;transform:translate(-50%,-8%);width:min(72vw,1280px);height:min(39vh,420px);overflow:hidden;border-radius:50%;background:transparent;pointer-events:none}
+#pool-rim{display:none}
+#pool::after{content:"";position:absolute;inset:0;border-radius:50%;box-shadow:inset 0 0 42px rgba(0,0,0,.38),0 0 28px rgba(55,208,255,.08);pointer-events:none}
+#water{position:absolute;inset:auto 0 0 0;height:0;z-index:2;overflow:hidden;border-radius:50%;transition:height 5.2s cubic-bezier(.22,1,.36,1);background:radial-gradient(ellipse at 50% 18%,rgba(180,248,255,.26),rgba(34,183,225,.18) 35%,rgba(0,95,145,.46) 72%,rgba(0,42,74,.55) 100%);box-shadow:inset 0 12px 28px rgba(220,255,255,.16),inset 0 -22px 48px rgba(0,10,20,.38)}
+#water::before{content:"";position:absolute;left:-8%;top:-10px;width:116%;height:52px;border-radius:50%;background:radial-gradient(ellipse at 50% 30%,rgba(225,255,255,.34),transparent 63%),repeating-radial-gradient(ellipse at 50% 20%,rgba(255,255,255,.10) 0 3px,transparent 3px 20px);animation:wave 4s ease-in-out infinite}
+#water::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,.05),transparent 22%,rgba(0,0,0,.11));mix-blend-mode:screen;pointer-events:none}
+@keyframes wave{0%,100%{transform:scaleX(1) translateX(-1%)}50%{transform:scaleX(1.03) translateX(1%)}}
+#egg{position:absolute;left:50%;top:56%;width:clamp(125px,11vw,175px);height:clamp(165px,24vh,230px);transform:translate(-50%,-50%);background:url('Golden-Egg/close.png') center/contain no-repeat;cursor:pointer;z-index:6;transition:filter .45s ease,transform .3s ease,top 1.2s ease;filter:drop-shadow(0 0 7px rgba(255,227,120,.72)) drop-shadow(0 18px 18px rgba(0,0,0,.45));pointer-events:auto}
+#egg:hover{transform:translate(-50%,-50%) scale(1.045)}
+#egg::after{content:"";position:absolute;inset:10% 8%;border-radius:50%;background:radial-gradient(circle,rgba(255,242,145,.20),transparent 58%);opacity:0;transition:.4s ease;pointer-events:none}
+#egg.submerged{top:61%;filter:drop-shadow(0 0 8px rgba(111,252,255,.9)) drop-shadow(0 0 22px rgba(41,217,255,.7));transform:translate(-50%,-50%);}
+#egg.glowing{filter:drop-shadow(0 0 10px #6ffcff) drop-shadow(0 0 34px #29d9ff) drop-shadow(0 18px 18px rgba(0,0,0,.3))}
+#egg.glowing::after{opacity:1;animation:pulseGlow 1.8s ease-in-out infinite}
+#egg.open{background-image:url('Golden-Egg/open.png');filter:drop-shadow(0 0 12px #6ffcff) drop-shadow(0 0 40px #29d9ff) drop-shadow(0 18px 18px rgba(0,0,0,.35))}
+#egg.open::after{opacity:1;animation:pulseGlow 1.8s ease-in-out infinite}
+@keyframes pulseGlow{0%,100%{transform:scale(.92);opacity:.25}50%{transform:scale(1.06);opacity:.65}}
+#egg.screaming{animation:shake .11s linear infinite}
+@keyframes shake{0%{transform:translate(-50%,-50%) rotate(0)}25%{transform:translate(calc(-50% - 3px),-50%) rotate(-4deg)}50%{transform:translate(calc(-50% + 3px),-50%) rotate(4deg)}75%{transform:translate(calc(-50% - 2px),-50%) rotate(-3deg)}100%{transform:translate(-50%,-50%) rotate(0)}}
+#riddle-box{position:fixed;left:50%;top:53%;transform:translate(-50%,-52%) scale(.92);width:min(720px,86vw);display:none;padding:24px 28px 28px;border:1px solid rgba(111,252,255,.6);border-radius:20px;color:#dcffff;text-align:center;background:linear-gradient(135deg,rgba(2,16,24,.9),rgba(4,35,47,.78));box-shadow:0 0 24px rgba(41,217,255,.18),inset 0 0 35px rgba(111,252,255,.05);backdrop-filter:blur(14px);pointer-events:auto;animation:riddleIn .7s cubic-bezier(.2,.8,.2,1) forwards}@keyframes riddleIn{to{transform:translate(-50%,-50%) scale(1)}}#riddle-box .seal{display:inline-flex;align-items:center;justify-content:center;width:58px;height:58px;margin-top:-50px;margin-bottom:4px;border-radius:50%;border:1px solid rgba(212,175,55,.65);background:rgba(7,17,24,.95);color:var(--gold-bright);font-size:1.6rem;box-shadow:0 0 22px rgba(212,175,55,.15)}#riddle-box h2{margin:0 0 8px;font-size:clamp(1.45rem,3vw,2rem);color:#a9ffff}#riddle-box p{margin:0;font-size:clamp(1.1rem,2.25vw,1.55rem);line-height:1.8;color:#eefcff}#riddle-box small{display:block;margin-top:14px;color:rgba(255,255,255,.6);font-size:.95rem}
+#hint{position:absolute;bottom:max(14px,env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);width:min(700px,90vw);text-align:center;color:rgba(255,255,255,.72);font-size:clamp(.92rem,1.7vw,1.1rem);text-shadow:0 2px 8px #000;z-index:7}#magic-flash{position:absolute;inset:0;background:radial-gradient(circle,rgba(180,255,255,.4),transparent 42%);opacity:0;pointer-events:none;z-index:15}#magic-flash.active{animation:flash .7s ease}@keyframes flash{0%{opacity:0}18%{opacity:.75}100%{opacity:0}}
+#bubbles{position:absolute;inset:0;pointer-events:none;z-index:4;overflow:hidden}.bubble{position:absolute;bottom:-30px;border-radius:50%;border:1px solid rgba(220,255,255,.46);background:radial-gradient(circle at 30% 25%,rgba(255,255,255,.38),rgba(255,255,255,.05) 42%,transparent 70%);animation:rise linear forwards}@keyframes rise{from{transform:translateY(0) scale(.8);opacity:0}10%{opacity:.72}100%{transform:translateY(-115vh) scale(1.05);opacity:0}}
+.hidden{display:none!important}
+@media (max-width:700px){#top-hud{width:94vw;margin-top:10px}.title{font-size:1.45rem}.subtitle{font-size:.86rem}#status{font-size:.86rem}#controls{gap:6px}.control-btn{padding:8px 10px;font-size:.88rem}#pool{width:92vw;height:32vh;min-height:210px;top:50%}#egg{width:120px;height:165px;top:58%}#egg.submerged{top:63%}#hint{bottom:7px;font-size:.82rem}#riddle-box{top:51%;width:94vw;padding:17px 14px 20px}#riddle-box p{font-size:1.03rem;line-height:1.65}#riddle-box .seal{width:46px;height:46px;margin-top:-39px}}@media (min-width:1400px){#pool{width:min(1100px,82vw);height:50vh}}
+</style>
+</head>
+<body>
+<div id="bathroom">
+  <div id="ambient"><div class="mist m1"></div><div class="mist m2"></div></div>
+  <div id="ui-layer">
+    <div id="top-hud">
+      <h1 class="title">لغز البيضة الذهبية</h1>
+      <p class="subtitle">أحد أسرار الحمام المغمور في سحر هوجوورتس</p>
+      <div id="controls">
+        <button class="control-btn" id="mic-btn">🎙️ دوس عشان تقول التعويذة المناسبة</button>
+        <button class="control-btn" id="manual-btn">🌊 ملء الحوض يدوياً</button>
+      </div>
+      <div id="status">البيضة ساكنة... هل تجرؤ على لمسها؟</div>
+    </div>
+    <div id="riddle-box" aria-live="polite">
+      <div class="seal">✦</div><h2>سر حوريات البحر</h2>
+      <p>«تعال ابحث عنا حيث تغني أصواتنا... فلن تجدنا فوق الأرض نغني،<br>ولديك ساعة كاملة لتبحث... وتستعيد ما أخذناه منك.»</p>
+      <small>احتفظ بالرسالة... إنها مفتاح المرحلة التالية.</small>
+    </div>
+    <div id="hint">دوس على البيضة قبل الماء لتسمع صرختها... وبعد امتلاء الحوض اكشف سرها.</div>
+  </div>
+  <div id="scene"><div id="pool"><div id="pool-rim"></div><div id="water"><div id="bubbles"></div></div><div id="egg" role="button" aria-label="البيضة الذهبية"></div></div></div>
+  <div id="magic-flash"></div>
+</div>
+<audio id="scream-audio" src="Golden-Egg/scream.mp3" preload="auto" loop></audio>
+<audio id="mermaid-audio" src="Golden-Egg/mermaid.mp3" preload="auto" loop></audio>
+<script>
+(()=>{
+ const state={waterFilled:false,eggOpen:false,eggSubmerged:false,bubbleTimer:null};
+ const $=id=>document.getElementById(id);
+ const egg=$('egg'),water=$('water'),scream=$('scream-audio'),mermaid=$('mermaid-audio'),riddle=$('riddle-box'),mic=$('mic-btn'),manual=$('manual-btn'),status=$('status'),hint=$('hint'),flash=$('magic-flash'),bubbles=$('bubbles');
+ const setStatus=t=>status.textContent=t;
+ const resetMic=()=>{mic.classList.remove('listening');mic.textContent='🎙️ دوس عشان تقول التعويذة المناسبة'};
+ const play=a=>a&&a.play().catch(()=>{});
+ const stop=a=>{if(!a)return;a.pause();a.currentTime=0};
+ function magicFlash(){flash.classList.remove('active');void flash.offsetWidth;flash.classList.add('active')}
+ function spawnBubble(){const b=document.createElement('span');b.className='bubble';const s=5+Math.random()*14;b.style.width=s+'px';b.style.height=s+'px';b.style.left=(5+Math.random()*90)+'%';b.style.animationDuration=(2.4+Math.random()*3.6)+'s';bubbles.appendChild(b);setTimeout(()=>b.remove(),7000)}
+ state.bubbleTimer=setInterval(()=>{if(state.waterFilled){spawnBubble();spawnBubble()}},320);
+ function fill(){if(state.waterFilled)return;state.waterFilled=true;state.eggSubmerged=false;closeEgg();water.style.height='100%';egg.classList.remove('screaming');setStatus('✨ أجوامينتي! الماء يملأ الحوض...');hint.textContent='الماء يرتفع... انتظر حتى تغمر المياه البيضة.';mic.textContent='🌊 الماء يرتفع...';mic.disabled=true;manual.disabled=true;magicFlash();water.addEventListener('transitionend',onWaterFilled,{once:true});setTimeout(onWaterFilled,5400)}
+ function onWaterFilled(){if(!state.waterFilled||state.eggSubmerged)return;state.eggSubmerged=true;egg.classList.add('submerged','glowing');setStatus('🌊 البيضة أصبحت داخل المياه... دوس عليها الآن.');hint.textContent='دوس على البيضة الآن لتكشف الرسالة السرية.';magicFlash()}
+ function openEgg(){if(!state.waterFilled){state.eggOpen=true;egg.classList.add('screaming');play(scream);setStatus('😱 البيضة تصرخ! يبدو أن الماء هو الحل...');hint.textContent='هناك سر داخل البيضة... لكن ليس فوق الأرض.';return}if(!state.eggSubmerged){setStatus('🌊 لسه! استنى لحد ما المية تغمر البيضة بالكامل.');hint.textContent='المية بتعلى... استنى شوية.';return}state.eggOpen=true;egg.classList.add('submerged','glowing','open');play(mermaid);riddle.style.display='block';magicFlash();setStatus('🧜‍♀️ صوت حوريات البحر! تم كشف الرسالة.');hint.textContent='احفظ الرسالة جيدًا؛ إنها تقودك إلى المرحلة التالية.'}
+ function closeEgg(){state.eggOpen=false;egg.classList.remove('screaming','open');stop(scream);stop(mermaid);riddle.style.display='none';if(state.eggSubmerged){egg.classList.add('submerged');setStatus('🌊 البيضة داخل المياه... دوس عليها لكشف السر.')}else{egg.classList.remove('glowing','submerged');setStatus('البيضة ساكنة... هل تجرؤ على لمسها؟')}}
+ egg.addEventListener('click',()=>state.eggOpen?closeEgg():openEgg());manual.addEventListener('click',fill);
+ const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+ if(SR){const recognition=new SR();recognition.lang='ar-EG';recognition.continuous=false;recognition.interimResults=false;recognition.maxAlternatives=5;mic.addEventListener('click',()=>{if(state.waterFilled)return;try{recognition.start();mic.classList.add('listening');mic.textContent='🎙️ أستمع... قل «أجوامينتي»';setStatus('قل التعويذة بوضوح...')}catch(e){}});recognition.onresult=e=>{const arr=[];for(let i=0;i<e.results[0].length;i++)arr.push(e.results[0][i].transcript.trim().toLowerCase());const t=arr.join(' | ');const ok=['أجوامينتي','اجوامينتي','اجوامنتي','أكوامينتي','اكوامينتي','aguamenti','agua menti'].some(w=>t.includes(w.toLowerCase()));if(ok)fill();else{mic.textContent='❌ التعويذة غير صحيحة';setStatus('حاول مرة أخرى... قل: أجوامينتي');setTimeout(()=>{if(!state.waterFilled)resetMic()},1600)}};recognition.onerror=()=>{if(!state.waterFilled){setStatus('تعذر سماع التعويذة... جرّب مرة أخرى أو استخدم الزر اليدوي.');resetMic()}};recognition.onend=()=>{if(!state.waterFilled)resetMic()}}else{mic.classList.add('hidden');setStatus('الميكروفون غير مدعوم هنا — استخدم ملء الحوض يدوياً.')}
+})();
+</script>
+</body>
+</html>
